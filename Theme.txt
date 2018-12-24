@@ -1,0 +1,8 @@
+Name: Meme Generator Media Theme
+Author: Mark Bartha
+Website: https://github.com/Lombiq/Show-Orchard-Theme
+Description: Meme generator Media Theme for DotNest.
+Version: 1.0
+BaseTheme: Lombiq.PrettyGoodBootstrapBaseTheme
+Zones: Navigation, Messages, Content, Footer
+Dependencies: Lombiq.LiquidMarkup.ViewEngine, DotNest.Sdk
