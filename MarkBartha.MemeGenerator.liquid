@@ -1,0 +1,13 @@
+{% ScriptRequire "jQueryUI", head %}
+{% StyleRequire "jQueryUI_Orchard" head %}
+
+{% Script "/Scripts/jquery.memegenerator.min.js", head %}
+{% Style "/Styles/jquery.memegenerator.min.css" head %}
+
+<img id="meme" src="https://imgflip.com/s/meme/Creepy-Condescending-Wonka.jpg" />
+<button id="download">Download</button>
+
+<script>
+    $("#meme").memeGenerator();
+    $("#download").click(function(e) { e.preventDefault(); $("#meme").memeGenerator("download"); });
+</script>
