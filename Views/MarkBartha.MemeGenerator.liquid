@@ -1,16 +1,52 @@
 {% Display Resources %}
 
-<img id="meme" src="https://imgflip.com/s/meme/Creepy-Condescending-Wonka.jpg" crossorigin="Anonymous" />
-<button class="btn" id="download">Download</button>
+  <p>Meme generator won't store images on the server. Everything happens in the browser.</p>
+  <div id="memeUploader">
+      <input id="uploader" type="file">
+  </div>
 
-<script>
-    $("#meme").memeGenerator({
-        useBootstrap: true
-    });
+  <div id="memeEditor" hidden>
+    <img id="meme" src="" alt="Upload image...">
 
-    $("#download").click(function(e) { 
-        e.preventDefault(); 
-        
-        $("#meme").memeGenerator("download"); 
-    });
+    <button id="download" class="btn">Download</button>
+  </div>
+
+  <script type="text/javascript">
+    ;
+    (function ($) {
+      $(function () {
+        $memeUploader = $("#memeUploader");
+        $memeEditor = $("#memeEditor");
+        $meme = $("#meme");
+        $download = $("#download");
+
+        $("#uploader").change(function () {
+          $memeUploader.hide();
+
+          var img = document.querySelector('#meme');
+          var file = this.files[0];
+          var reader = new FileReader();
+
+          reader.onloadend = function () {
+            img.src = reader.result;
+
+            $meme.memeGenerator();
+
+            $memeEditor.show();
+
+            $download.click(function (e) {
+              e.preventDefault();
+
+              $meme.memeGenerator("download");
+            });
+          }
+
+          if (file) {
+            reader.readAsDataURL(file);
+          } else {
+            img.src = "";
+          }
+        });
+      });
+    })(jQuery);
 </script>

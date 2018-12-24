@@ -1,28 +1,79 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-     
-    <!-- Meme Generator plugin -->
-    <script src="node_modules/jquery-meme-generator/src/js/jquery.memegenerator.js" type="text/javascript"></script>
-     
-     
-    <!-- jQuery UI CSS file -->
-    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-     
-    <!-- Meme Generator CSS file -->
-    <link rel="stylesheet" type="text/css" href="node_modules/jquery-meme-generator/dist/jquery.memegenerator.min.css">
 
-    <title>title</title>
-  </head>
-  <body>
-    <img id="meme" src="https://imgflip.com/s/meme/Creepy-Condescending-Wonka.jpg" crossorigin="Anonymous" />
+<head>
+  <meta charset="UTF-8">
+  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
+  <!-- Meme Generator plugin -->
+  <script src="node_modules/jquery-meme-generator/src/js/jquery.memegenerator.js" type="text/javascript"></script>
+
+
+  <!-- jQuery UI CSS file -->
+  <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+  <!-- Meme Generator CSS file -->
+  <link rel="stylesheet" type="text/css" href="node_modules/jquery-meme-generator/dist/jquery.memegenerator.min.css">
+
+  <title>title</title>
+</head>
+
+<body>
+  <!-- <img id="meme" src="https://imgflip.com/s/meme/Creepy-Condescending-Wonka.jpg" crossorigin="Anonymous" /> -->
+
+
+  <div id="memeUploader">
+      <input id="uploader" type="file">
+  </div>
+
+  <div id="memeEditor" hidden>
+    <img id="meme" src="" alt="Upload image...">
+
     <button id="download">Download</button>
-    <script>
-        $("#meme").memeGenerator();
-        $("#download").click(function(e) { e.preventDefault(); $("#meme").memeGenerator("download"); });
-    </script>
-  </body>
+  </div>
+
+  <script type="text/javascript">
+    ;
+    (function ($) {
+      $(function () {
+        $memeUploader = $("#memeUploader");
+        $memeEditor = $("#memeEditor");
+        $meme = $("#meme");
+        $download = $("#download");
+
+        $("#uploader").change(function () {
+          $memeUploader.hide();
+
+          var img = document.querySelector('#meme');
+          var file = this.files[0];
+          var reader = new FileReader();
+
+          reader.onloadend = function () {
+            img.src = reader.result;
+            // $meme.width("500px");
+
+            $meme.memeGenerator();
+
+
+            $memeEditor.show();
+
+            $download.click(function (e) {
+              e.preventDefault();
+
+              $meme.memeGenerator("download");
+            });
+          }
+
+          if (file) {
+            reader.readAsDataURL(file);
+          } else {
+            img.src = "";
+          }
+        });
+      });
+    })(jQuery);
+  </script>
+</body>
+
 </html>
