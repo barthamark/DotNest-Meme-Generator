@@ -1,0 +1,7 @@
+<img id="meme" src="https://imgflip.com/s/meme/Creepy-Condescending-Wonka.jpg" />
+<button id="download">Download</button>
+
+<script>
+    $("#meme").memeGenerator();
+    $("#download").click(function(e) { e.preventDefault(); $("#meme").memeGenerator("download"); });
+</script>
