@@ -5,7 +5,7 @@
       <input id="uploader" type="file">
   </div>
 
-  <div id="memeEditor" hidden>
+  <div id="memeEditor" style="margin-left: auto; margin-right: auto;" hidden>
     <img id="meme" src="" alt="Upload image...">
 
     <button id="download" class="btn">Download</button>
@@ -30,7 +30,9 @@
           reader.onloadend = function () {
             img.src = reader.result;
 
-            $meme.memeGenerator();
+            $meme.memeGenerator({
+                useBootstrap: true
+            });
 
             $memeEditor.show();
 
