@@ -1,54 +1,43 @@
-{% Display Resources %}
+<p>Meme generator won't store images on the server. Everything happens in the browser.</p>
 
-  <p>Meme generator won't store images on the server. Everything happens in the browser.</p>
-  <div id="memeUploader">
-      <input id="uploader" type="file">
-  </div>
+<div id="memeUploader">
+    <input id="uploader" type="file">
+</div>
+<div id="memeEditor" style="margin-left: auto; margin-right: auto;" hidden>
+  <img id="meme" src="" alt="Upload image...">
+  <button id="download" class="btn">Download</button>
+</div>
 
-  <div id="memeEditor" style="margin-left: auto; margin-right: auto;" hidden>
-    <img id="meme" src="" alt="Upload image...">
-
-    <button id="download" class="btn">Download</button>
-  </div>
-
-  <script type="text/javascript">
-    ;
-    (function ($) {
-      $(function () {
-        $memeUploader = $("#memeUploader");
-        $memeEditor = $("#memeEditor");
-        $meme = $("#meme");
-        $download = $("#download");
-
-        $("#uploader").change(function () {
-          $memeUploader.hide();
-
-          var img = document.querySelector('#meme');
-          var file = this.files[0];
-          var reader = new FileReader();
-
-          reader.onloadend = function () {
-            img.src = reader.result;
-
-            $meme.memeGenerator({
-                useBootstrap: true
-            });
-
-            $memeEditor.show();
-
-            $download.click(function (e) {
-              e.preventDefault();
-
-              $meme.memeGenerator("download");
-            });
-          }
-
-          if (file) {
-            reader.readAsDataURL(file);
-          } else {
-            img.src = "";
-          }
-        });
+<script type="text/javascript">
+  ;
+  (function ($) {
+    $(function () {
+      $memeUploader = $("#memeUploader");
+      $memeEditor = $("#memeEditor");
+      $meme = $("#meme");
+      $download = $("#download");
+      $("#uploader").change(function () {
+        $memeUploader.hide();
+        var img = document.querySelector('#meme');
+        var file = this.files[0];
+        var reader = new FileReader();
+        reader.onloadend = function () {
+          img.src = reader.result;
+          $meme.memeGenerator({
+              useBootstrap: true
+          });
+          $memeEditor.show();
+          $download.click(function (e) {
+            e.preventDefault();
+            $meme.memeGenerator("download");
+          });
+        }
+        if (file) {
+          reader.readAsDataURL(file);
+        } else {
+          img.src = "";
+        }
       });
-    })(jQuery);
+    });
+  })(jQuery);
 </script>
