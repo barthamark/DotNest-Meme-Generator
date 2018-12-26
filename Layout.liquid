@@ -20,19 +20,13 @@
     
     <footer id="footer" class="site-footer bg-dark text-light pt-4 pb-4" role="contentinfo">
         <div class="container">
-            <div class="row">
-
-            <div class="col-md-6">
+            <div>
                 {% Display Copyright %}
             </div>
-
-            <div class="col-md-6 text-right">
+            <div class="mt-4">
                 {% Display User %}
             </div>
-
-            <div class="clearfix"></div>
-
-            <div class="col-md-12 mt-4">
+            <div class="mt-4">
                 {{ Model.Footer | Display }}
             </div>
         </div>
