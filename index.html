@@ -7,11 +7,13 @@
 
   <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
   <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
   <script src="node_modules/jquery-meme-generator/src/js/jquery.memegenerator.js" type="text/javascript"></script>
 
   <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <link rel="stylesheet" type="text/css" href="node_modules/jquery-meme-generator/dist/jquery.memegenerator.min.css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
   <meta content="Orchard" name="generator" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -21,101 +23,104 @@
 <body>
 
 
-  <div id="layout-wrapper" class="container">
-    <header id="layout-header" class="group col-md-6">
-      <div id="header">
-        <div class="zone zone-header">
-          <h1 id="branding"><a href="/">Meme Generator</a></h1>
-        </div>
+
+  <div id="layout-wrapper">
+    <div class="bg-dark">
+      <div class="container">
+        <header id="header" class="navbar navbar-expand-lg navbar-dark" role="banner">
+          <div class="navbar-header">
+            <a href="/" rel="home" class="navbar-brand">Meme Generator</a>
+          </div>
+        </header>
       </div>
-    </header>
-    <div id="layout-main-container" class="container">
-      <div id="layout-main" class="group col-md-6">
-        <div id="layout-content" class="group">
-          <div id="content" class="group">
-            <div class="zone zone-content">
-              <article class="page content-item">
-                <header>
+    </div>
 
 
-                  <h1>Generate a meme!</h1>
+
+    <main id="content" class="pt-4 pb-4" role="main">
+      <div class="container">
+        <div class="zone zone-content">
+          <article class="page content-item">
+            <div class="orchard-layouts-root">
+
+              <div>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                  Meme Generator won't store images on the server. Everything happens in the browser.
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
 
 
-                  <div class="metadata">
-                    <div class="published">Monday, December 24, 2018 1:41:00 PM</div>
+                <div class="col-md-8 mx-auto bg-light p-3">
+
+                  <div id="memeUploader">
+                    <h5>1. Upload an image</h5>
+                    <input id="uploader" type="file">
                   </div>
-                </header>
-                <div class="orchard-layouts-root">
+                  <div id="memeEditor" hidden>
 
-                  <div>
+                    <h5>2. Edit meme</h5>
+                    <img id="meme" src="" alt="Uploaded image">
 
-                    <p>Meme generator won't store images on the server. Everything happens in the browser.</p>
-                    <div id="memeUploader">
-                      <input id="uploader" type="file">
-                    </div>
-
-                    <div id="memeEditor" style="margin-left: auto; margin-right: auto;" hidden>
-                      <img id="meme" src="" alt="Upload image...">
-
-                      <button id="download" class="btn">Download</button>
-                    </div>
-
-                    <script type="text/javascript">
-                      ;
-                      (function ($) {
-                        $(function () {
-                          $memeUploader = $("#memeUploader");
-                          $memeEditor = $("#memeEditor");
-                          $meme = $("#meme");
-                          $download = $("#download");
-
-                          $("#uploader").change(function () {
-                            $memeUploader.hide();
-
-                            var img = document.querySelector('#meme');
-                            var file = this.files[0];
-                            var reader = new FileReader();
-
-                            reader.onloadend = function () {
-                              img.src = reader.result;
-
-                              $meme.memeGenerator({
-                                useBootstrap: true
-                              });
-
-                              $memeEditor.show();
-
-                              $download.click(function (e) {
-                                e.preventDefault();
-
-                                $meme.memeGenerator("download");
-                              });
-                            }
-
-                            if (file) {
-                              reader.readAsDataURL(file);
-                            } else {
-                              img.src = "";
-                            }
-                          });
-                        });
-                      })(jQuery);
-                    </script>
+                    <h5 class="mt-3">3. Download</h5>
+                    <button id="download" class="btn w-100">Download</button>
                   </div>
 
                 </div>
-              </article>
+              </div>
+
+              <script type="text/javascript">
+                ;
+                (function ($) {
+                  $(function () {
+                    $memeUploader = $("#memeUploader");
+                    $memeEditor = $("#memeEditor");
+                    $meme = $("#meme");
+                    $download = $("#download");
+                    $("#uploader").change(function () {
+                      $memeUploader.hide();
+                      var img = document.querySelector('#meme');
+                      var file = this.files[0];
+                      var reader = new FileReader();
+                      reader.onloadend = function () {
+                        img.src = reader.result;
+                        $memeEditor.show();
+                        $memeEditor.removeAttr("hidden");
+                        $meme.memeGenerator({
+                          useBootstrap: true
+                        });
+                        $download.click(function (e) {
+                          e.preventDefault();
+                          $meme.memeGenerator("download");
+                        });
+                      }
+                      if (file) {
+                        reader.readAsDataURL(file);
+                      } else {
+                        img.src = "";
+                      }
+                    });
+                  });
+                })(jQuery);
+              </script>
             </div>
-          </div>
+
         </div>
+        </article>
       </div>
-    </div>
-    <div id="layout-footer" class="group">
-      <footer id="footer">
-        <div id="footer-quad" class="group">
-        </div>
-        <div id="footer-sig" class="group">
-          <div class="zone zone-footer">
+    </main>
+
+    <footer id="footer" class="site-footer bg-dark text-light pt-4 pb-4" role="contentinfo">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-md-6 copyright">
+            <span class="copyright">&copy; 2018 Meme Generator</span>
+          </div>
+
+          <div class="col-md-6 user-actions text-right">
+
             <div class="user-display">
               <span class="user-actions welcome">
                 Welcome, <strong><a href="/Users/Account/ChangePassword">admin</a></strong>!
@@ -125,19 +130,27 @@
                   rel="nofollow">Sign Out</a>
                 <a href="/Admin">Dashboard</a> </span>
             </div>
-            <div class="credits">
-              <span class="poweredby">
-                Powered by <a href="https://dotnest.com" target="_blank">DotNest</a>, the Orchard SaaS platform fueled
-                by <a href="https://lombiq.com" target="_blank">Lombiq</a>. See <a href="https://lombiq.com/privacy-policy"
-                  target="_blank">Lombiq's privacy policy</a> approved by the site's operator.
-              </span>
+          </div>
+
+          <div class="clearfix"></div>
+
+          <div class="col-md-12 mt-4">
+            <div class="zone zone-footer">
+              <div class="credits">
+                <span class="poweredby">
+                  Powered by <a href="https://dotnest.com" target="_blank">DotNest</a>, the Orchard SaaS platform
+                  fueled by <a href="https://lombiq.com" target="_blank">Lombiq</a>. See <a href="https://lombiq.com/privacy-policy"
+                    target="_blank">Lombiq's privacy policy</a> approved by the site's operator.
+                </span>
+              </div>
             </div>
+
           </div>
         </div>
-      </footer>
-    </div>
-  </div>
+      </div>
+    </footer>
 
+  </div>
 
 </body>
 
